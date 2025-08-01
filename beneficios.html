@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clube de Benefícios Sem Parar</title>
+    <style>
+        /* Paleta de Cores e Padrões */
+        :root {
+            --cor-principal: #FF1493; /* Rosa escuro */
+            --cor-texto-escuro: #000000; /* Preto */
+            --cor-fundo-claro: #FFFFFF; /* Branco */
+            --cor-fundo-cartao: #f7f7f7; /* Cinza claro */
+        }
+
+        /* Estilos Globais */
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            background-color: var(--cor-fundo-claro);
+            color: var(--cor-texto-escuro);
+            margin: 0;
+            padding: 40px 20px;
+            text-align: center;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: auto;
+        }
+
+        h1 {
+            font-size: 2.8em;
+            color: var(--cor-principal);
+            margin-bottom: 20px;
+            font-weight: 700;
+        }
+
+        p.subtitulo {
+            font-size: 1.2em;
+            color: #555;
+            margin-bottom: 50px;
+        }
+
+        /* Seção de Benefícios */
+        .beneficios-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+
+        /* Cartão de Benefício */
+        .beneficio-cartao {
+            background-color: var(--cor-fundo-cartao);
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            text-align: left;
+            position: relative;
+        }
+
+        .beneficio-cartao:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.12);
+        }
+
+        .beneficio-cartao h2 {
+            font-size: 1.8em;
+            color: var(--cor-texto-escuro);
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .beneficio-cartao h3 {
+            font-size: 1.2em;
+            margin-top: 25px;
+            margin-bottom: 15px;
+            color: var(--cor-principal);
+        }
+
+        .beneficio-cartao p {
+            font-size: 1em;
+            line-height: 1.6;
+            color: #444;
+        }
+
+        .lista-detalhes {
+            list-style: none;
+            padding: 0;
+            margin-top: 20px;
+        }
+
+        .lista-detalhes li {
+            margin-bottom: 10px;
+            display: flex;
+            align-items: flex-start;
+            gap: 8px;
+            font-size: 1em;
+            color: #333;
+        }
+
+        .lista-detalhes li span.emoji {
+            font-size: 1.2em;
+            line-height: 1;
+        }
+
+        /* Calculadora */
+        .calculadora {
+            margin-top: 20px;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            border: 1px solid #ddd;
+        }
+        .calculadora label, .calculadora select, .calculadora input, .calculadora button {
+            display: block;
+            width: 100%;
+            margin-bottom: 10px;
+            font-size: 1em;
+            padding: 8px;
+        }
+        .calculadora input, .calculadora select {
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        .calculadora button {
+            background-color: var(--cor-principal);
+            color: var(--cor-fundo-claro);
+            border: none;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        .calculadora button:hover {
+            background-color: #c01272;
+        }
+        #resultado {
+            margin-top: 15px;
+            font-size: 1.2em;
+            font-weight: bold;
+            color: var(--cor-principal);
+        }
+
+        /* Botão de Saiba Mais - Único */
+        .btn-saiba-mais {
+            display: inline-block;
+            background-color: var(--cor-principal);
+            color: var(--cor-fundo-claro);
+            padding: 12px 25px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: bold;
+            margin-top: 25px;
+            transition: background-color 0.3s ease;
+        }
+
+        .btn-saiba-mais:hover {
+            background-color: #c01272;
+        }
+        
+        /* Estilos do item expansível */
+        .collapsible {
+            background-color: transparent;
+            color: var(--cor-texto-escuro);
+            cursor: pointer;
+            padding: 10px 0;
+            width: 100%;
+            border: none;
+            text-align: left;
+            outline: none;
+            font-size: 1.2em;
+            font-weight: bold;
+            margin-top: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        
+        .collapsible .arrow {
+            transition: transform 0.3s ease;
+            font-size: 1.2em;
+        }
+        
+        .collapsible.active .arrow {
+            transform: rotate(-180deg);
+        }
+        
+        .collapsible-content {
+            padding: 0 10px;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-out;
+            color: #444;
+        }
+        
+        .collapsible-content p {
+            margin-top: 15px;
+        }
+        
+        .collapsible-content h4 {
+            font-size: 1.1em;
+            color: #000;
+            margin-top: 20px;
+            margin-bottom: 10px;
+        }
+        
+        .collapsible-content ul {
+            padding-left: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Clube de Benefícios Sem Parar 🚀</h1>
+        <p class="subtitulo">Acelere sua economia com as vantagens exclusivas que só o Sem Parar oferece.</p>
+
+        <div class="beneficios-grid">
+
+            <div class="beneficio-cartao">
+                <h2><span>💰</span> Cashback Sem Parar</h2>
+                <p>Ganhe dinheiro de volta em abastecimentos e compras online!</p>
+                
+                <h3>Cashback no Abastecimento ⛽</h3>
+                <p>Ao usar sua Tag Sem Parar em postos parceiros e abastecer a partir de R$100, você recebe dinheiro de volta na fatura.</p>
+                
+                <div class="calculadora">
+                    <label for="valorCombustivel">Valor do abastecimento (R$):</label>
+                    <input type="number" id="valorCombustivel" min="100" value="100">
+
+                    <label for="plano">Selecione seu plano:</label>
+                    <select id="plano">
+                        <option value="3">Plano Padrão (3%)</option>
+                        <option value="5">Plano Turbo (5%)</option>
+                    </select>
+
+                    <button onclick="calcularCashback()">Calcular Cashback</button>
+                    <div id="resultado"></div>
+                </div>
+
+                <h3>Cashback no Sem Parar Shop 🛍️</h3>
+                <p>Em nosso SuperApp, você acessa mais de **190 lojas parceiras** (como **Nike, Fast Shop, Adidas e Casas Bahia**) e ganha cashback em suas compras online.</p>
+                <a href="https://www.semparar.com.br/clube-de-beneficios" class="btn-saiba-mais">Saiba Mais</a>
+            </div>
+
+            <div class="beneficio-cartao">
+                <h2><span>🎁</span> Descontos Exclusivos</h2>
+                <p>Aproveite descontos especiais em diversas categorias essenciais para a sua rotina.</p>
+                
+                <button class="collapsible">
+                    Até 60% de desconto em medicamentos <span class="arrow">▼</span>
+                </button>
+                <div class="collapsible-content">
+                    <p>Clientes Sem Parar contam com descontos exclusivos, basta informar o CPF no caixa das lojas físicas ou cadastrar o Sem Parar como opção de convênio nas compras online. Confira alguns descontos:</p>
+                    
+                    <h4>Drogaria São Paulo e Pacheco</h4>
+                    <ul>
+                        <li>Medicamentos: até 60%</li>
+                        <li>Dermocosméticos: 5%</li>
+                    </ul>
+                    
+                    <h4>Extrafarma</h4>
+                    <ul>
+                        <li>Medicamentos genéricos tarjados: até 30%</li>
+                        <li>Medicamentos de marca tarjados: a partir de 15%</li>
+                        <li>Medicamentos sem prescrição médica: a partir de 5%</li>
+                    </ul>
+                </div>
+                
+                <ul class="lista-detalhes">
+                    <li><span class="emoji">✈️</span> **Viagem & Lazer:** Até 10% de cashback em reservas na **Hot Beach** e **Zarpo**, e 10% ou mais de desconto no aluguel de carros na **Movida**.</li>
+                    <li><span class="emoji">📚</span> **Cultura & Leitura:** 1 livro grátis por mês com o **Skeelo**.</li>
+                    <li><span class="emoji">🍔</span> **Alimentação:** 15% de desconto no **Frango Assado** em compras acima de R$60.</li>
+                </ul>
+            </div>
+
+            <div class="beneficio-cartao">
+                <h2><span>🤝</span> Indique e Ganhe</h2>
+                <p>Compartilhe as vantagens do Sem Parar e ganhe créditos na sua fatura para cada amigo que se juntar à nossa família.</p>
+                <ul class="lista-detalhes">
+                    <li><span class="emoji">💰</span> Receba até **R$70 em créditos** por cada indicação.</li>
+                    <li><span class="emoji">🚀</span> Não há limite de indicações: quanto mais amigos você indica, mais você ganha.</li>
+                </ul>
+            </div>
+
+        </div>
+    </div>
+
+    <script>
+        // Lógica da calculadora de cashback
+        function calcularCashback() {
+            const valorCombustivel = document.getElementById('valorCombustivel').value;
+            const porcentagemPlano = document.getElementById('plano').value;
+            const resultadoDiv = document.getElementById('resultado');
+
+            if (valorCombustivel < 100) {
+                resultadoDiv.textContent = "O valor deve ser R$ 100 ou mais.";
+                resultadoDiv.style.color = "red";
+                return;
+            }
+
+            const cashback = (valorCombustivel * porcentagemPlano) / 100;
+            resultadoDiv.textContent = `Você receberia R$ ${cashback.toFixed(2)} de cashback!`;
+            resultadoDiv.style.color = "var(--cor-principal)";
+        }
+        
+        // Lógica do item expansível
+        var collapsibles = document.getElementsByClassName("collapsible");
+        for (let i = 0; i < collapsibles.length; i++) {
+            collapsibles[i].addEventListener("click", function() {
+                this.classList.toggle("active");
+                var content = this.nextElementSibling;
+                if (content.style.maxHeight) {
+                    content.style.maxHeight = null;
+                } else {
+                    content.style.maxHeight = content.scrollHeight + "px";
+                } 
+            });
+        }
+    </script>
+</body>
+</html>
